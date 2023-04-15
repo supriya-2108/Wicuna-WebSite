@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { CgMenu, CgCloseR } from "react-icons/cg";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { CgMenu, CgCloseR } from 'react-icons/cg';
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -35,7 +35,7 @@ const Navbar = () => {
         display: none;
       }
     }
-    .mobile-navbar-btn[name="close-outline"] {
+    .mobile-navbar-btn[name='close-outline'] {
       display: none;
     }
     @media (max-width: ${({ theme }) => theme.media.mobile}) {
@@ -94,25 +94,25 @@ const Navbar = () => {
         opacity: 1;
         transform: translateX(-5);
         z-index: 999;
-        
       }
-      .navbar-list{
+      .navbar-list {
         width: 50vw;
         height: 50vh;
-        border:1px solid ${({ theme }) => theme.colors.orange};
+        border: 1px solid ${({ theme }) => theme.colors.orange};
       }
     }
   `;
 
   return (
     <Nav>
-      <div className={openMenu ? "menuIcon active" : "menuIcon"}>
+      <div className={openMenu ? 'menuIcon active' : 'menuIcon'}>
         <ul className="navbar-list">
           <li>
             <NavLink
               className="navbar-link"
               onClick={() => setOpenMenu(false)}
-              to="/">
+              to="/"
+            >
               Home
             </NavLink>
           </li>
@@ -120,7 +120,8 @@ const Navbar = () => {
             <NavLink
               className="navbar-link"
               onClick={() => setOpenMenu(false)}
-              to="/about">
+              to="/about"
+            >
               About
             </NavLink>
           </li>
@@ -128,7 +129,8 @@ const Navbar = () => {
             <NavLink
               className="navbar-link"
               onClick={() => setOpenMenu(false)}
-              to="/prices">
+              to="/prices"
+            >
               Prices
             </NavLink>
           </li>
@@ -136,8 +138,9 @@ const Navbar = () => {
             <NavLink
               className="navbar-link"
               onClick={() => setOpenMenu(false)}
-              to="/contact">
-              ContactUs
+              to="/contact"
+            >
+              Contact Us
             </NavLink>
           </li>
         </ul>
