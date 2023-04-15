@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '../Styles/Button';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Divider } from 'antd';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../Database/firebase';
@@ -14,12 +14,13 @@ const Booking = () => {
     date: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setSendData({ ...sendData, [e.target.name]: e.target.value });
   };
 
   const passInfo = async (event) => {
-    // 👇 Get input value from "event"
     event.preventDefault();
     if (
       sendData.name != '' &&
@@ -37,7 +38,10 @@ const Booking = () => {
         const docRef = await addDoc(collection(db, 'Booking Details'), {
           bookingDetails: data,
         });
-        console.log('Document written with ID: ', docRef.id);
+        alert(
+          'Your appointment has been booked. Thank you for booking with us'
+        );
+        navigate('/');
       } catch (e) {
         console.error('Error adding document: ', e);
       }
@@ -60,25 +64,20 @@ const Booking = () => {
           is in the range of 10km from us).
         </p>
       </div>
-
       <div className="bookingForm">
         <form className="formData">
-          <span>( Fill This Form To book Your Appointment )</span>
-          <br />
-          <br />
-          <label>
-            Your name:
+          <label className="formLabel">
+            <span className="formLabelSpan">Your Name:</span>
             <input
               type="text"
               name="name"
               value={sendData.name}
               onChange={handleChange}
-              required="true"
+              required
             />
           </label>
-          <br />
-          <label>
-            Your Address:
+          <label className="formLabel">
+            <span className="formLabelSpan">Your Address:</span>
             <input
               type="text"
               name="address"
@@ -87,20 +86,18 @@ const Booking = () => {
               required
             />
           </label>
-          <br />
-          <label>
-            Your Mobile Number:
+          <label className="formLabel">
+            <span className="formLabelSpan">Mobile Number:</span>
             <input
-              type="text"
+              type="phone"
               name="mobile"
               value={sendData.mobile}
               onChange={handleChange}
               required
             />
           </label>
-          <br />
-          <label>
-            Select Appointment Date:
+          <label className="formLabel">
+            <span className="formLabelSpan"> Appointment Date:</span>
             <input
               type="date"
               name="date"
@@ -109,7 +106,6 @@ const Booking = () => {
               required
             />
           </label>
-          <br />
           <br />
           <Button className="btn hire-me-btn" onClick={passInfo}>
             <NavLink to="/booking">SAVE YOUR INFORMATION</NavLink>
@@ -122,6 +118,10 @@ const Booking = () => {
 
 const BookingSection = styled.section`
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .details {
     margin-top: 5%;
     display: flex;
@@ -141,20 +141,34 @@ const BookingSection = styled.section`
   }
 
   .bookingForm {
-    width: 50vw;
+    width: 50%;
     height: 72vh;
     border: 1px solid ${({ theme }) => theme.colors.orange};
-    margin-left: 25%;
     padding-top: 1%;
+  }
 
-    label {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    input {
-      margin-bottom: 5%;
-      margin-left: 5rem;
-    }
+  .formData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .formLabel {
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4%;
+  }
+
+  .formLabelSpan {
+    width: 200px;
+    font-size: 1.5rem;
+    text-align: initial;
+  }
+
+  .formLabel input {
+    width: 200px;
   }
 
   @media (max-width: ${({ theme }) => theme.media.mobile}) {
@@ -167,6 +181,9 @@ const BookingSection = styled.section`
     }
     .bookingForm {
       height: 55vh;
+    }
+    .formLabel {
+      flex-direction: column;
     }
   }
 `;
